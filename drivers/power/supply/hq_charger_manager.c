@@ -468,6 +468,13 @@ static int batt_psy_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX:
 		rc = batt_get_battery_constant_current_max(chg, &pval->intval);
+		if (chg->sw_psy) {
+		rc = power_supply_get_property(chg->sw_psy, 
+		    POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, pval);
+		} else {
+		    pval->intval = 3000000;
+		    rc = 0;
+		}
 		break;
 	case POWER_SUPPLY_PROP_TEMP:
 		rc =  batt_get_battery_temp(chg, &pval->intval);
