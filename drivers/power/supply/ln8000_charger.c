@@ -32,6 +32,7 @@
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
 #define pr_warn(fmt, ...) 
+#include <linux/quiet_logs.h>
 
 extern void power_supply_unregister(struct power_supply *psy);
 extern void gpiod_put(struct gpio_desc *desc);

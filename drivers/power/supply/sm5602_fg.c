@@ -45,6 +45,7 @@
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
 #define pr_warn(fmt, ...) 
+#include <linux/quiet_logs.h>
 
 extern s32 i2c_smbus_write_word_data(const struct i2c_client *client, u8 command,
 			      u16 value);

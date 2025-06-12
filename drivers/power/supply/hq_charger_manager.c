@@ -27,6 +27,7 @@
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
 #define pr_warn(fmt, ...) 
+#include <linux/quiet_logs.h>
 
 #if 0
 int set_jeita_lcd_on_off(bool lcdon)

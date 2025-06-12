@@ -32,6 +32,7 @@
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
 #define pr_warn(fmt, ...) 
+#include <linux/quiet_logs.h>
 
 /*
  * Default temperature threshold for charging.

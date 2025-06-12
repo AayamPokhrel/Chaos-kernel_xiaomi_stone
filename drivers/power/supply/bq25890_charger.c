@@ -36,6 +36,7 @@
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
 #define pr_warn(fmt, ...) 
+#include <linux/quiet_logs.h>
 
 #define BQ25890_MANUFACTURER		"Texas Instruments"
 #define BQ25890_IRQ_PIN			"bq25890_irq"
