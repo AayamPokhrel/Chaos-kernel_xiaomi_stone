@@ -2393,8 +2393,7 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
 	u32			saved_config = 0;
 	dbg_event(0xFF, "run_stop", is_on);
 
-	if (pm_runtime_suspended(dwc->dev))
-		return 0;
+	dbg_event(0xFF, "run_stop", is_on);
 
 	/*
 	 * When operating in USB 2.0 speeds (HS/FS), ensure that
@@ -2493,10 +2492,15 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
 	}
 
 	do {
-		usleep_range(1000, 2000);
 		reg = dwc3_readl(dwc->regs, DWC3_DSTS);
 		reg &= DWC3_DSTS_DEVCTRLHLT;
 	} while (--timeout && !(!is_on ^ !reg));
+
+	if (saved_config) {
+		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+		reg |= saved_config;
+		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
+	}
 
 	if (!timeout) {
 		dev_err(dwc->dev, "failed to %s controller\n",
@@ -2533,6 +2537,7 @@ static int dwc3_gadget_run_stop_util(struct dwc3 *dwc)
 			dwc->gadget_state = DWC3_GADGET_SOFT_CONN;
 			break;
 		}
+		break;
 	case DWC3_GADGET_SOFT_CONN:
 		if (!dwc->softconnect) {
 			dwc->gadget_state = DWC3_GADGET_INACTIVE;
@@ -4424,16 +4429,17 @@ static irqreturn_t dwc3_check_event_buf(struct dwc3_event_buffer *evt)
 	if (!count)
 		return IRQ_NONE;
 
+	if (count > evt->length) {
+		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
+			count, evt->length);
+		return IRQ_NONE;
+	}
+
 	/* Controller is halted; ignore new/pending events */
 	if (!dwc->pullups_connected) {
 		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), count);
 		dbg_event(0xFF, "NO_PULLUP", count);
 		return IRQ_HANDLED;
-		}
-	if (count > evt->length) {
-		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
-			count, evt->length);
-		return IRQ_NONE;
 	}
 
 	evt->count = count;
