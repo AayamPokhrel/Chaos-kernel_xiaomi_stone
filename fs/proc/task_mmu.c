@@ -371,6 +371,7 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 {
 	struct mm_struct *mm = vma->vm_mm;
 	struct file *file = vma->vm_file;
+	struct dentry *dentry = file->f_path.dentry;
 	vm_flags_t flags = vma->vm_flags;
 	unsigned long ino = 0;
 	unsigned long long pgoff = 0;
@@ -383,7 +384,6 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma)
 		dev = inode->i_sb->s_dev;
 		ino = inode->i_ino;
 		pgoff = ((loff_t)vma->vm_pgoff) << PAGE_SHIFT;
-        struct dentry *dentry = file->f_path.dentry;
         if (dentry) {
         	const char *path = (const char *)dentry->d_name.name; 
             	if (strstr(path, "lineage")) { 
