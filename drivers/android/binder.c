@@ -5605,6 +5605,7 @@ static void binder_add_freeze_work(struct binder_proc *proc, bool is_frozen)
 }
 
 //wrap unused function
+
 #if 0
 static int binder_ioctl_freeze(struct binder_freeze_info *info,
 			       struct binder_proc *target_proc)
