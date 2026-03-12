@@ -5690,7 +5690,7 @@ static ssize_t sysfs_dimlayer_exposure_write(struct device *dev,
 {
 	struct dsi_display *display;
 	struct dsi_panel *panel;
-	struct drm_connector *connector;
+	struct drm_connector *connector = NULL;
 	bool status;
 	int rc = 0;
 	display = dev_get_drvdata(dev);
