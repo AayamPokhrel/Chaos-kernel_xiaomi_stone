@@ -39,12 +39,13 @@
 #include <linux/time.h>
 #include <linux/poll.h>
 
-/* Disable all charging logs */
+/* Disable all charging logs
 #define pr_fmt(fmt) ""
 #define pr_err(fmt, ...) 
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
-#define pr_warn(fmt, ...) 
+#define pr_warn(fmt, ...)
+*/
 #include <linux/quiet_logs.h>
 
 extern s32 i2c_smbus_write_word_data(const struct i2c_client *client, u8 command,

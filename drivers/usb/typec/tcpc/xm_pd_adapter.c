@@ -48,23 +48,29 @@
 static int log_level = 2;
 int get_apdo_regain;
 
+#ifndef adapter_err
 #define adapter_err(fmt, ...)							\
 do {										\
 	if (log_level >= 0)							\
 		printk(KERN_ERR "[xm_pd_adapter] " fmt, ##__VA_ARGS__);	\
 } while (0)
+#endif
 
+#ifndef adapter_info
 #define adapter_info(fmt, ...)							\
 do {										\
 	if (log_level >= 1)							\
 		printk(KERN_ERR "[xm_pd_adapter] " fmt, ##__VA_ARGS__);	\
 } while (0)
+#endif
 
+#ifndef adapter_dbg
 #define adapter_dbg(fmt, ...)							\
 do {										\
 	if (log_level >= 2)							\
 		printk(KERN_ERR "[xm_pd_adapter] " fmt, ##__VA_ARGS__);	\
 } while (0)
+#endif
 
 struct xm_pd_adapter_info {
 	struct tcpc_device *tcpc;

@@ -1,5 +1,3 @@
-#define pr_fmt(fmt) "batt_chg %s: " fmt, __func__
-
 #include <linux/slab.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -21,12 +19,13 @@
 
 #include <misc/fastchg.h>
 
-/* Disable all charging logs */
+/* Disable all charging logs
 #define pr_fmt(fmt) ""
 #define pr_err(fmt, ...) 
 #define pr_info(fmt, ...) 
 #define pr_debug(fmt, ...) 
-#define pr_warn(fmt, ...) 
+#define pr_warn(fmt, ...)
+*/
 #include <linux/quiet_logs.h>
 
 #if 0
